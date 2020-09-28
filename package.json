@@ -1,0 +1,66 @@
+{
+  "name": "ovpn-keytar",
+  "description": "Command line to automate open vpn client using credentials stored in the OSX keychain",
+  "version": "1.0.0",
+  "author": "Duncan Ward <git@ddub.ca>",
+  "bin": {
+    "ovpn": "./bin/run"
+  },
+  "bugs": "https://github.com/duncward/ovpn-keytar/issues",
+  "dependencies": {
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.0",
+    "keytar": "^6.0.1",
+    "speakeasy": "^2.0.0",
+    "squeakeasy": "^2.0.2",
+    "tslib": "^1.13.0"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.22.2",
+    "@oclif/test": "^1.2.7",
+    "@types/chai": "^4.2.12",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.17.29",
+    "@types/speakeasy": "^2.0.5",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.0.1",
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-oclif": "^3.1.0",
+    "eslint-config-oclif-typescript": "^0.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "mocha": "^5.2.0",
+    "nyc": "^14.1.1",
+    "oclif": "^1.16.1",
+    "prettier": "^2.1.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib"
+  ],
+  "homepage": "https://github.com/duncward/ovpn-keytar",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "oclif": {
+    "bin": "ovpn"
+  },
+  "repository": "duncward/ovpn-keytar",
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}
