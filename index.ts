@@ -61,8 +61,9 @@ const getCreds = async (): Promise<Credentials> => {
         void
       > => {
         const creds = value[0] === null ? null : JSON.parse(value[0]);
+        const secret = value[1] === null ? "" : value[1].toString();
         const vpntoken = speakeasy.totp({
-          secret: value[1]?.toString() || "",
+          secret: secret,
           encoding: "base32",
         });
         resolve({ user: creds.user, pass: creds.pass, token: vpntoken });
