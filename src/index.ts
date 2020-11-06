@@ -78,17 +78,36 @@ const setCreds = async (): Promise<Credentials> => {
   })
 };
 
+const svcSecret = "vpn";
+const actSecret = "2sv";
+const setSecret = async (): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    inquirer
+      .prompt([
+        {
+          type: 'password',
+          message: '2sv secret:',
+          name: 'token',
+          mask: '*',
+        },
+      ])
+      .then((answers: any) => {
+        keytar.setPassword(svcSecret, actSecret, answers.token);
+        resolve(answers.token);
+      }).catch((err: any) => { reject(err); })
+  })
+}
 const getCreds = async (): Promise<Credentials> => {
   return new Promise<Credentials>((resolve, reject) => {
     Promise.all([
       keytar.getPassword(svcCreds, actCreds),
-      keytar.getPassword("vpn", "2sv"),
+      keytar.getPassword(svcSecret, actSecret),
     ])
       .then(async (value) => {
         let creds = value[0] === null ? null : JSON.parse(value[0]);
         if (creds === null) { creds = await setCreds(); }
         let secret = value[1] === null ? "" : value[1].toString();
-        if (secret === null) { return reject("No secret"); secret = ""; }
+        if (secret === "") { secret = await setSecret(); }
         const vpntoken = speakeasy.totp({
           secret: secret,
           encoding: "base32",

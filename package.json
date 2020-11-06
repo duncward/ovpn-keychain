@@ -5,6 +5,8 @@
   "author": "Duncan Ward <git@ddub.ca>",
   "bugs": "https://github.com/duncward/ovpn-keytar/issues",
   "dependencies": {
+    "@types/inquirer": "^7.3.1",
+    "inquirer": "^7.3.3",
     "keytar": "^6.0.1",
     "speakeasy": "^2.0.0",
     "squeakeasy": "^2.0.2",
