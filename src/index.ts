@@ -57,11 +57,11 @@ const getCreds = async (): Promise<Credentials> => {
       keytar.getPassword("cloudev", "okta"),
       keytar.getPassword("vpn", "2sv"),
     ])
-      .then((value: [string | null, string | null]): void | PromiseLike<
-        void
-      > => {
-        const creds = value[0] === null ? null : JSON.parse(value[0]);
-        const secret = value[1] === null ? "" : value[1].toString();
+      .then(async (value) => {
+        let creds = value[0] === null ? null : JSON.parse(value[0]);
+        if (creds === null) { return reject("No creds"); }
+        let secret = value[1] === null ? "" : value[1].toString();
+        if (secret === null) { return reject("No secret"); secret = ""; }
         const vpntoken = speakeasy.totp({
           secret: secret,
           encoding: "base32",
@@ -96,9 +96,3 @@ const reconnect = async (): Promise<void> => {
 reconnect().catch((err) => {
   console.log(err);
 });
-//#➜  duncan.ward /Library/Frameworks/OpenVPN.framework/Versions/Current/bin/ovpncli status
-//#Connection to duncan.ward@uberflip.com@devvpn.cdntwrk.com established via UDP using VPN IP 172.27.224.206 with duration 0:01:05
-//#➜  duncan.ward /Library/Frameworks/OpenVPN.framework/Versions/Current/bin/ovpncli disconnect
-//#1 connection(s) disconnected
-//#➜  duncan.ward /Library/Frameworks/OpenVPN.framework/Versions/Current/bin/ovpncli status
-//#Disconnected/DELETE_PENDING
