@@ -42,11 +42,11 @@ export const ovpn = (
     spawned.stderr.on("data", (data) => {
       stderr = stderr + data.toString();
     });
-    spawned.on("close", () => {
+    spawned.on("exit", (exit) => {
       resolve({
         stdout: strstdout,
         stderr: stderr,
-        exit: spawned.exitCode,
+        exit: exit,
       });
     });
   });
